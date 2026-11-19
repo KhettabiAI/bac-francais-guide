@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>المحاكاة — دليل بكالوريا الفرنسية</title>
+<meta name="description" content="دليل تنفيذي لتحضير اللغة الفرنسية في بكالوريا الشعب العلمية: منهجية، خطة، تدريب تفاعلي ومواضيع 2021–2026.">
+<script>try{var t=localStorage.getItem('bg.theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="index.html"><span class="logo" aria-hidden="true">Fr</span><span class="name">دليل الفرنسية · باك</span></a>
+    <nav class="nav" aria-label="التنقل الرئيسي"><a href="index.html">الرئيسية</a><a href="guide.html">كيف أستعمل الدليل</a><a href="plan.html">الخطة</a><a href="methode.html">المنهجية</a><a href="production.html">الكتابة</a><a href="vocabulaire.html">المفردات</a><a href="entrainement.html">التدريب</a><a href="annales.html">المواضيع</a><a href="simulateur.html" aria-current="page">المحاكاة</a><a href="suivi.html">المتابعة</a><a href="ressources.html">المراجع</a></nav>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="تبديل الوضع الليلي" title="الوضع الليلي">◐</button>
+  </div>
+</header>
+<main id="main"><div class="wrap">
+<section class="page-head">
+  <h1>محاكاة الامتحان (2 س 30 د)</h1>
+  <p class="lead">اختر موضوعاً، شغّل المؤقت، واتبع المراحل المقترحة. بعد الانتهاء صحّح بالحل النموذجي وسجّل نتيجتك.</p>
+</section>
+
+<div class="grid cols-2">
+  <div class="card">
+    <h2 class="mt0">1) الإعداد</h2>
+    <div class="field"><label for="yr">السنة</label>
+      <select id="yr"><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div>
+    <div class="field"><label for="dur">المدة (دقيقة)</label>
+      <select id="dur"><option value="150" selected>150 (امتحان كامل)</option><option value="90">90 (نص + أسئلة)</option><option value="60">60 (أسئلة فقط)</option></select></div>
+    <p><a id="openExam" class="btn ghost" href="annales/2026.html" target="_blank" rel="noopener">فتح الموضوع في تبويب جديد ↗</a></p>
+    <p class="muted" style="font-size:.9rem">نصيحة: اطبع الموضوع، أو افتحه ثم لا تفتح الحل النموذجي قبل نهاية المؤقت.</p>
+  </div>
+  <div class="card">
+    <h2 class="mt0">2) المؤقت</h2>
+    <div class="clock" id="clock" role="timer" aria-live="off">02:30:00</div>
+    <div class="row mt1" style="justify-content:center">
+      <button class="btn" id="go" type="button">ابدأ</button>
+      <button class="btn ghost" id="pause" type="button" disabled>إيقاف مؤقت</button>
+      <button class="btn ghost" id="stop" type="button" disabled>إنهاء</button>
+    </div>
+    <div class="phases mt1" id="phases" aria-label="مراحل مقترحة"></div>
+  </div>
+</div>
+
+<section class="card mt2" id="selfEval">
+  <h2 class="mt0">3) التقييم الذاتي (بعد التصحيح)</h2>
+  <p class="muted">أدخل نقاطك كما صحّحتها بالسلّم الرسمي. الحد الأقصى: 14 للفهم + 6 للإنتاج.</p>
+  <div class="form-grid">
+    <div class="field"><label for="sComp">Compréhension (من 14)</label><input id="sComp" type="number" min="0" max="14" step="0.25"></div>
+    <div class="field"><label for="sProd">Production écrite (من 6)</label><input id="sProd" type="number" min="0" max="6" step="0.25"></div>
+    <div class="field"><label for="sSujet">الموضوع المختار</label>
+      <select id="sSujet"><option value="1">الأول</option><option value="2">الثاني</option></select></div>
+    <div class="field"><label for="sType">نوع الإنتاج</label>
+      <select id="sType"><option value="cr">Compte rendu</option><option value="libre">Production libre</option></select></div>
+  </div>
+  <div class="field"><label for="sNote">ملاحظات (ما الذي أخّرني؟ ما الذي سأغيّره؟)</label><input id="sNote" type="text" style="direction:rtl"></div>
+  <div class="row"><div class="score-big" id="total" style="margin:0">— / 20</div><span class="spacer"></span><button class="btn" id="saveEval" type="button">حفظ النتيجة</button></div>
+  <p class="muted">بعد الحفظ تظهر نتيجتك في <a href="suivi.html">المتابعة</a>. أضف أخطاءك هناك أيضاً.</p>
+</section>
+
+</div></main>
+<footer class="site-footer"><div class="wrap">
+  <p>مبني على مواضيع وحلول بكالوريا الفرنسية 2021–2026 (الشعب العلمية). بياناتك (التقدم، الأخطاء) محفوظة في متصفحك فقط. <a href="ressources.html">المراجع والتحفظات</a></p>
+</div></footer>
+<script src="js/app.js" defer></script>
+<script src="js/sim.js" defer></script>
+</body>
+</html>

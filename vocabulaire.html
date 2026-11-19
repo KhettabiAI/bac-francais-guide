@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>المفردات — دليل بكالوريا الفرنسية</title>
+<meta name="description" content="دليل تنفيذي لتحضير اللغة الفرنسية في بكالوريا الشعب العلمية: منهجية، خطة، تدريب تفاعلي ومواضيع 2021–2026.">
+<script>try{var t=localStorage.getItem('bg.theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="index.html"><span class="logo" aria-hidden="true">Fr</span><span class="name">دليل الفرنسية · باك</span></a>
+    <nav class="nav" aria-label="التنقل الرئيسي"><a href="index.html">الرئيسية</a><a href="guide.html">كيف أستعمل الدليل</a><a href="plan.html">الخطة</a><a href="methode.html">المنهجية</a><a href="production.html">الكتابة</a><a href="vocabulaire.html" aria-current="page">المفردات</a><a href="entrainement.html">التدريب</a><a href="annales.html">المواضيع</a><a href="simulateur.html">المحاكاة</a><a href="suivi.html">المتابعة</a><a href="ressources.html">المراجع</a></nav>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="تبديل الوضع الليلي" title="الوضع الليلي">◐</button>
+  </div>
+</header>
+<main id="main"><div class="wrap">
+<section class="page-head">
+  <h1>المفردات: بطاقات بالمراجعة المتباعدة</h1>
+  <p class="lead">المفردات والخلفية الموضوعاتية تسهّل الفهم والإحالات. هنا <strong id="totalCards">0</strong> بطاقة في 8 محاور من المواضيع المتكررة. تعتمد البطاقات نظام <strong>Leitner</strong>: الجواب الصحيح يرفع البطاقة صندوقاً (مراجعة أبعد)، والخاطئ يعيدها للأول.</p>
+</section>
+
+<div class="grid cols-2">
+  <div class="card">
+    <div class="row">
+      <strong>المراجعة اليوم</strong><span class="spacer"></span>
+      <span class="tag" id="dueCount">0 مستحقة</span><span class="tag accent" id="newCount">0 جديدة</span>
+    </div>
+    <div class="field mt1"><label for="axisSel">المحور</label>
+      <select id="axisSel"></select></div>
+    <div class="field"><label for="newPerDay">بطاقات جديدة في الجلسة</label>
+      <input type="number" id="newPerDay" min="0" max="30" value="10"></div>
+    <div class="row"><button class="btn" id="startBtn" type="button">ابدأ جلسة</button>
+    <button class="btn ghost" id="resetBtn" type="button">مسح التقدّم</button></div>
+  </div>
+  <div class="card">
+    <strong>الصناديق (Leitner)</strong>
+    <div class="boxes mt1" id="boxes" aria-label="توزيع البطاقات على الصناديق"></div>
+    <p class="muted mt1" style="font-size:.9rem">الفترات: صندوق 1 = غداً · 2 = 3 أيام · 3 = 7 أيام · 4 = 14 يوماً · 5 = 30 يوماً. الفترات قابلة للتعديل؛ المبدأ هو التباعد المتزايد.</p>
+  </div>
+</div>
+
+<section id="session" class="mt2" hidden aria-live="polite">
+  <div class="row"><strong id="progressTxt"></strong><span class="spacer"></span><button class="btn ghost sm" id="stopBtn" type="button">إنهاء</button></div>
+  <div class="progress mt1"><span id="sessBar"></span></div>
+  <div class="flash mt1" id="flash">
+    <div class="flash-inner" id="flashInner" role="button" tabindex="0" aria-label="اقلب البطاقة">
+      <div class="face front"><div class="w" id="fW" lang="fr"></div><div class="sub">فكّر في المعنى ثم اضغط للقلب (Space)</div></div>
+      <div class="face back"><div class="w" id="fA" dir="rtl" lang="ar" style="font-family:var(--font-ar);font-size:1.5rem"></div><div class="ex" id="fE" lang="fr"></div></div>
+    </div>
+  </div>
+  <div class="row mt1" id="grade" hidden style="justify-content:center">
+    <button class="btn danger" id="btnWrong" type="button">✗ لم أعرفها (1)</button>
+    <button class="btn" id="btnRight" type="button">✓ عرفتها (2)</button>
+  </div>
+</section>
+<section id="done" class="card mt2 center" hidden>
+  <h2 class="mt0">انتهت الجلسة ✓</h2><p id="doneTxt"></p>
+  <button class="btn" id="againBtn" type="button">جلسة أخرى</button>
+</section>
+
+<h2>قائمة المفردات</h2>
+<div class="row no-print"><label for="q" class="muted" style="margin:0">بحث:</label><input id="q" type="text" style="max-width:280px" placeholder="كلمة فرنسية أو عربية"></div>
+<div id="list" class="mt1"></div>
+
+</div></main>
+<footer class="site-footer"><div class="wrap">
+  <p>مبني على مواضيع وحلول بكالوريا الفرنسية 2021–2026 (الشعب العلمية). بياناتك (التقدم، الأخطاء) محفوظة في متصفحك فقط. <a href="ressources.html">المراجع والتحفظات</a></p>
+</div></footer>
+<script src="js/app.js" defer></script>
+<script src="js/../data/vocab-data.js" defer></script>
+<script src="js/flash.js" defer></script>
+</body>
+</html>

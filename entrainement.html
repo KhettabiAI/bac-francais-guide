@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>التدريب التفاعلي — دليل بكالوريا الفرنسية</title>
+<meta name="description" content="دليل تنفيذي لتحضير اللغة الفرنسية في بكالوريا الشعب العلمية: منهجية، خطة، تدريب تفاعلي ومواضيع 2021–2026.">
+<script>try{var t=localStorage.getItem('bg.theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="index.html"><span class="logo" aria-hidden="true">Fr</span><span class="name">دليل الفرنسية · باك</span></a>
+    <nav class="nav" aria-label="التنقل الرئيسي"><a href="index.html">الرئيسية</a><a href="guide.html">كيف أستعمل الدليل</a><a href="plan.html">الخطة</a><a href="methode.html">المنهجية</a><a href="production.html">الكتابة</a><a href="vocabulaire.html">المفردات</a><a href="entrainement.html" aria-current="page">التدريب</a><a href="annales.html">المواضيع</a><a href="simulateur.html">المحاكاة</a><a href="suivi.html">المتابعة</a><a href="ressources.html">المراجع</a></nav>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="تبديل الوضع الليلي" title="الوضع الليلي">◐</button>
+  </div>
+</header>
+<main id="main"><div class="wrap">
+<section class="page-head">
+  <h1>التدريب التفاعلي</h1>
+  <p class="lead">أسئلة <strong>حقيقية</strong> من مواضيع 2021–2026، بالإجابات الرسمية. كل خطأ يُسجَّل تلقائياً في «المتابعة» لتراجعه لاحقاً بالتباعد. يُنصح بالبدء بنوع واحد ثم <strong>الخلط</strong> بين الأنواع (interleaving).</p>
+</section>
+
+<section id="setup" class="card">
+  <h2 class="mt0">إعداد الجلسة</h2>
+  <div class="field">
+    <label>نوع السؤال</label>
+    <div class="row" id="skillChips" role="group" aria-label="أنواع الأسئلة"></div>
+  </div>
+  <div class="form-grid">
+    <div class="field"><label for="yearSel">السنة</label>
+      <select id="yearSel"><option value="all">كل السنوات</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select></div>
+    <div class="field"><label for="countSel">عدد الأسئلة</label>
+      <select id="countSel"><option>5</option><option selected>10</option><option>15</option><option>20</option></select></div>
+  </div>
+  <p class="muted" id="poolInfo"></p>
+  <div class="row"><button class="btn" id="startBtn" type="button">ابدأ</button><span class="muted" id="statsInfo"></span></div>
+</section>
+
+<section id="runner" hidden aria-live="polite">
+  <div class="row"><strong id="qCount"></strong><span class="spacer"></span><span class="tag" id="qScore"></span></div>
+  <div class="progress mt1"><span id="qBar"></span></div>
+  <article class="card q-card mt1" id="qCard"></article>
+</section>
+
+<section id="result" hidden>
+  <div class="card center">
+    <div class="score-big" id="rScore"></div>
+    <p id="rMsg"></p>
+    <div class="row" style="justify-content:center"><button class="btn" id="againBtn" type="button">جلسة جديدة</button><a class="btn ghost" href="suivi.html">إلى سجل الأخطاء</a></div>
+  </div>
+  <h3>حسب النوع</h3><div id="bySkill" class="grid cols-4"></div>
+</section>
+
+</div></main>
+<footer class="site-footer"><div class="wrap">
+  <p>مبني على مواضيع وحلول بكالوريا الفرنسية 2021–2026 (الشعب العلمية). بياناتك (التقدم، الأخطاء) محفوظة في متصفحك فقط. <a href="ressources.html">المراجع والتحفظات</a></p>
+</div></footer>
+<script src="js/app.js" defer></script>
+<script src="js/../data/quiz-data.js" defer></script>
+<script src="js/quiz.js" defer></script>
+</body>
+</html>

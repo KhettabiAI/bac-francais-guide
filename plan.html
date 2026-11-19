@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الخطة — دليل بكالوريا الفرنسية</title>
+<meta name="description" content="دليل تنفيذي لتحضير اللغة الفرنسية في بكالوريا الشعب العلمية: منهجية، خطة، تدريب تفاعلي ومواضيع 2021–2026.">
+<script>try{var t=localStorage.getItem('bg.theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="index.html"><span class="logo" aria-hidden="true">Fr</span><span class="name">دليل الفرنسية · باك</span></a>
+    <nav class="nav" aria-label="التنقل الرئيسي"><a href="index.html">الرئيسية</a><a href="guide.html">كيف أستعمل الدليل</a><a href="plan.html" aria-current="page">الخطة</a><a href="methode.html">المنهجية</a><a href="production.html">الكتابة</a><a href="vocabulaire.html">المفردات</a><a href="entrainement.html">التدريب</a><a href="annales.html">المواضيع</a><a href="simulateur.html">المحاكاة</a><a href="suivi.html">المتابعة</a><a href="ressources.html">المراجع</a></nav>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="تبديل الوضع الليلي" title="الوضع الليلي">◐</button>
+  </div>
+</header>
+<main id="main"><div class="wrap">
+<section class="page-head">
+  <h1>الخطة: 12 أسبوعاً في 5 مراحل</h1>
+  <p class="lead">كل أسبوع هدف واضح ومهام قابلة للتنفيذ. علّم الأسبوع كمُنجَز عند إتمام مهامه؛ تقدّمك يظهر في الرئيسية.</p>
+  <div class="card">
+    <div class="row"><strong>تقدّمك</strong><span class="spacer"></span><span id="planPct">0%</span></div>
+    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="planBar"><span></span></div>
+    <div class="row mt1">
+      <label for="startDate" style="margin:0">تاريخ بدء الخطة:</label>
+      <input type="date" id="startDate" style="max-width:200px">
+      <span class="muted" id="curWeek"></span>
+      <span class="spacer"></span>
+      <button class="btn ghost sm" id="resetPlan" type="button">إعادة ضبط</button>
+    </div>
+  </div>
+</section>
+
+<h2 class="mt0">الإيقاع الأسبوعي (5 جلسات × 45–60 دقيقة)</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+<tbody><tr>
+<td>نص جديد + أسئلة</td><td>مفردات + مرجعيات</td><td>نص جديد (نوع آخر)</td><td>Compte rendu / production libre</td><td>مراجعة الأخطاء + سؤال الرأي</td>
+</tr></tbody></table></div>
+<p class="muted">مرة كل 2–3 أسابيع: اختبار كامل بشروط الامتحان ← <a href="simulateur.html">المحاكاة</a>.</p>
+
+<div id="weeks" class="grid"></div>
+
+<h2>إدارة الوقت في الامتحان (2 س 30 د)</h2>
+<div class="table-scroll"><table>
+<thead><tr><th>المرحلة</th><th>المدة</th><th>ماذا تفعل</th></tr></thead>
+<tbody>
+<tr><td>اختيار الموضوع</td><td>5 د</td><td>النص الأوضح + الإنتاج الكتابي الذي تتقنه</td></tr>
+<tr><td>قراءتان + خريطة الفقرات</td><td>15 د</td><td>فكرة كل فقرة في الهامش (≤ 6 كلمات)</td></tr>
+<tr><td>الأسئلة (14 نقطة)</td><td>55–60 د</td><td>الفكرة الرئيسية بعد خريطة الفقرات</td></tr>
+<tr><td>الإنتاج الكتابي (6 نقاط)</td><td>45–50 د</td><td>مسودة 10 د ← كتابة ← عدّ الكلمات</td></tr>
+<tr><td>مراجعة اللغة</td><td>10 د</td><td>تطابق، أزمنة، ترقيم، إملاء (≤ 10 أخطاء)</td></tr>
+</tbody></table></div>
+<p class="muted">توزيع زمني مقترح (من الخطة)، وليس قاعدة رسمية. عدّله بعد محاكاتين أو ثلاث.</p>
+
+</div></main>
+<footer class="site-footer"><div class="wrap">
+  <p>مبني على مواضيع وحلول بكالوريا الفرنسية 2021–2026 (الشعب العلمية). بياناتك (التقدم، الأخطاء) محفوظة في متصفحك فقط. <a href="ressources.html">المراجع والتحفظات</a></p>
+</div></footer>
+<script src="js/app.js" defer></script>
+<script src="js/plan.js" defer></script>
+</body>
+</html>

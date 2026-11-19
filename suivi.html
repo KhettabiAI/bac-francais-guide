@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>المتابعة — دليل بكالوريا الفرنسية</title>
+<meta name="description" content="دليل تنفيذي لتحضير اللغة الفرنسية في بكالوريا الشعب العلمية: منهجية، خطة، تدريب تفاعلي ومواضيع 2021–2026.">
+<script>try{var t=localStorage.getItem('bg.theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="index.html"><span class="logo" aria-hidden="true">Fr</span><span class="name">دليل الفرنسية · باك</span></a>
+    <nav class="nav" aria-label="التنقل الرئيسي"><a href="index.html">الرئيسية</a><a href="guide.html">كيف أستعمل الدليل</a><a href="plan.html">الخطة</a><a href="methode.html">المنهجية</a><a href="production.html">الكتابة</a><a href="vocabulaire.html">المفردات</a><a href="entrainement.html">التدريب</a><a href="annales.html">المواضيع</a><a href="simulateur.html">المحاكاة</a><a href="suivi.html" aria-current="page">المتابعة</a><a href="ressources.html">المراجع</a></nav>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="تبديل الوضع الليلي" title="الوضع الليلي">◐</button>
+  </div>
+</header>
+<main id="main"><div class="wrap">
+<section class="page-head">
+  <h1>المتابعة: الأخطاء ونتائجك</h1>
+  <p class="lead">سجل الأخطاء هو أقوى أداة في الخطة: كل خطأ يُراجَع بعد <strong>يوم ثم أسبوع ثم 3 أسابيع</strong>. والنتائج تُظهر هل تتحسّن فعلاً.</p>
+</section>
+
+<div class="grid cols-4" id="kpis">
+  <div class="card stat"><div class="n" id="kDue">0</div><div class="l">تنتظر مراجعة اليوم</div></div>
+  <div class="card stat"><div class="n" id="kOpen">0</div><div class="l">أخطاء مفتوحة</div></div>
+  <div class="card stat"><div class="n" id="kRes">0</div><div class="l">أخطاء أُتقنت</div></div>
+  <div class="card stat"><div class="n" id="kAvg">—</div><div class="l">متوسط آخر 3 محاكاة /20</div></div>
+</div>
+
+<div class="tabs" role="tablist" data-tabs aria-label="أقسام المتابعة">
+  <button role="tab" id="t-due" aria-controls="p-due" aria-selected="true">مراجعة اليوم</button>
+  <button role="tab" id="t-add" aria-controls="p-add" aria-selected="false" tabindex="-1">إضافة خطأ</button>
+  <button role="tab" id="t-all" aria-controls="p-all" aria-selected="false" tabindex="-1">كل الأخطاء</button>
+  <button role="tab" id="t-stats" aria-controls="p-stats" aria-selected="false" tabindex="-1">تحليل الأنواع</button>
+  <button role="tab" id="t-history" aria-controls="p-history" aria-selected="false" tabindex="-1">النتائج</button>
+  <button role="tab" id="t-data" aria-controls="p-data" aria-selected="false" tabindex="-1">بياناتي</button>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="p-due" aria-labelledby="t-due">
+  <h2 class="mt0">أخطاء للمراجعة اليوم</h2>
+  <p class="muted">أجب عن السؤال بنفسك <em>قبل</em> أن تعرض التصحيح، ثم قيّم: هل أتقنته؟</p>
+  <div id="dueList"></div>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="p-add" aria-labelledby="t-add" hidden>
+  <h2 class="mt0" id="add">إضافة خطأ</h2>
+  <form id="errForm">
+    <div class="form-grid">
+      <div class="field"><label for="eType">نوع الخطأ</label><select id="eType"></select></div>
+      <div class="field"><label for="eSrc">المصدر (السنة/الموضوع/السؤال)</label><input id="eSrc" type="text" placeholder="مثال: 2025 S2 Q6" dir="ltr"></div>
+    </div>
+    <div class="field"><label for="eNote">ما الذي أخطأت فيه؟</label><input id="eNote" type="text" required></div>
+    <div class="field"><label for="eFix">التصحيح الصحيح وسببه</label><input id="eFix" type="text"></div>
+    <button class="btn" type="submit">حفظ الخطأ</button>
+  </form>
+  <div class="callout tip"><strong class="t">كيف تصنّف؟</strong>اسأل: هل المشكلة في فهم <em>النص</em>، أم <em>السؤال</em>، أم <em>المفردات</em>، أم <em>الإحالة</em>؟ التصنيف الصحيح يوجّه خطة الأسبوع التالي.</div>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="p-all" aria-labelledby="t-all" hidden>
+  <div class="row"><select id="fType" style="max-width:240px"></select><select id="fState" style="max-width:200px"><option value="all">الكل</option><option value="open">مفتوحة</option><option value="done">مُتقنة</option></select></div>
+  <div id="allList" class="mt1"></div>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="p-stats" aria-labelledby="t-stats" hidden>
+  <h2 class="mt0">أكثر أنواع أخطائك تكراراً</h2>
+  <div id="typeBars"></div>
+  <div class="callout" id="advice"></div>
+  <h3>دقة التدريب التفاعلي حسب النوع</h3>
+  <div id="skillBars"></div>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="p-history" aria-labelledby="t-history" hidden>
+  <h2 class="mt0" id="history">نتائج المحاكاة</h2>
+  <div id="chart" class="mt1"></div>
+  <div class="table-scroll"><table><thead><tr><th>التاريخ</th><th>الموضوع</th><th>فهم/14</th><th>إنتاج/6</th><th>المجموع/20</th><th>ملاحظة</th><th></th></tr></thead><tbody id="histBody"></tbody></table></div>
+  <p><a class="btn" href="simulateur.html">محاكاة جديدة</a></p>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="p-data" aria-labelledby="t-data" hidden>
+  <h2 class="mt0">بياناتي</h2>
+  <p>كل بياناتك محفوظة في هذا المتصفح فقط. صدّرها لتحتفظ بنسخة، أو لتنقلها إلى جهاز آخر.</p>
+  <div class="row">
+    <button class="btn" id="exportBtn" type="button">تصدير (JSON)</button>
+    <label class="btn ghost" for="importFile" style="margin:0">استيراد</label><input id="importFile" type="file" accept="application/json" hidden>
+    <button class="btn danger" id="wipeBtn" type="button">مسح كل البيانات</button>
+  </div>
+</div>
+
+</div></main>
+<footer class="site-footer"><div class="wrap">
+  <p>مبني على مواضيع وحلول بكالوريا الفرنسية 2021–2026 (الشعب العلمية). بياناتك (التقدم، الأخطاء) محفوظة في متصفحك فقط. <a href="ressources.html">المراجع والتحفظات</a></p>
+</div></footer>
+<script src="js/app.js" defer></script>
+<script src="js/suivi.js" defer></script>
+</body>
+</html>
