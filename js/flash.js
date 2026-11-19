@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const fresh = pool.filter(c => !state[c[0]]).length;
     $('dueCount').textContent = due + ' مستحقة';
     $('newCount').textContent = fresh + ' جديدة';
+    $('dueN').textContent = due; $('newN').textContent = Math.min(fresh, +$('newPerDay').value || 0);
+    $('newPerDayTxt').textContent = +$('newPerDay').value || 0;
     const bx = [0, 0, 0, 0, 0];
     Object.values(state).forEach(s => { bx[s.box - 1]++; });
     $('boxes').innerHTML = bx.map((n, i) => `<div class="b"><div class="n">${n}</div><div class="muted">صندوق ${i + 1}</div></div>`).join('');
@@ -32,9 +34,12 @@ document.addEventListener('DOMContentLoaded', function () {
     BG.save('flash.newPerDay', n);
     const fresh = BG.shuffle(pool.filter(c => !state[c[0]])).slice(0, n);
     queue = BG.shuffle(due.concat(fresh)); idx = 0; stats = { ok: 0, ko: 0 };
-    if (!queue.length) { BG.toast('لا توجد بطاقات مستحقة اليوم 🎉'); return; }
-    $('done').hidden = true; $('session').hidden = false; show();
-    $('session').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!queue.length) {
+      BG.toast('لا توجد بطاقات للمراجعة اليوم');
+      if (BG.param('task') === 'review') { BG.markDone('review'); setTimeout(() => { location.href = 'index.html'; }, 900); }
+      return;
+    }
+    $('done').hidden = true; $('home').hidden = true; $('session').hidden = false; show();
   }
 
   function show() {
@@ -62,14 +67,20 @@ document.addEventListener('DOMContentLoaded', function () {
     idx++; show();
   }
   function finish() {
-    $('session').hidden = true; $('done').hidden = false;
-    $('doneTxt').textContent = 'صحيحة: ' + stats.ok + ' — خاطئة: ' + stats.ko + '. ارجع غداً لمراجعة ما استحقّ.';
+    $('session').hidden = true; $('done').hidden = false; $('home').hidden = true;
+    $('doneTxt').textContent = 'عرفتَ ' + stats.ok + ' وأخطأت في ' + stats.ko + '. ما نسيته يعود قريباً.';
+    if (BG.param('task') === 'review') {
+      BG.markDone('review');
+      const acts = $('doneActions');
+      if (!acts.querySelector('a')) acts.prepend(Object.assign(BG.backToToday(acts), {}));
+      $('againBtn').hidden = true;
+    }
     counts();
   }
 
   $('startBtn').addEventListener('click', start);
   $('againBtn').addEventListener('click', start);
-  $('stopBtn').addEventListener('click', () => { $('session').hidden = true; counts(); });
+  $('stopBtn').addEventListener('click', () => { $('session').hidden = true; $('home').hidden = false; counts(); });
   $('flashInner').addEventListener('click', flip);
   $('btnRight').addEventListener('click', () => grade(true));
   $('btnWrong').addEventListener('click', () => grade(false));
@@ -100,4 +111,5 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   $('q').addEventListener('input', drawList);
   drawList(); counts();
+  if (BG.param('auto') === '1') start();
 });

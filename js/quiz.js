@@ -26,10 +26,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const n = filtered().length;
     $('poolInfo').textContent = n + ' سؤالاً متاحاً بهذه الاختيارات.';
     $('startBtn').disabled = n === 0;
+    $('startBtn').textContent = 'ابدأ ' + $('countSel').value + ' أسئلة' + (picked.size === Object.keys(SKILLS).length ? ' مختلطة' : '');
     const st = BG.load('quiz.stats', { done: 0, correct: 0 });
     $('statsInfo').textContent = st.done ? 'دقتك الإجمالية: ' + Math.round(100 * st.correct / st.done) + '% (' + st.correct + '/' + st.done + ')' : '';
   }
   $('yearSel').addEventListener('change', pool);
+  $('countSel').addEventListener('change', pool);
 
   // ---- run
   function start() {
@@ -83,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function feedback(q, ok) {
     const fb = $('fb');
     fb.hidden = false;
-    fb.innerHTML = `<div class="callout ${ok ? '' : 'bad'}"><strong class="t">${ok ? '✓ صحيح' : '✗ خطأ — سُجّل في سجل الأخطاء'}</strong>${BG.esc(q.why)}</div>
+    fb.innerHTML = `<div class="callout ${ok ? '' : 'bad'}"><strong class="t">${ok ? 'صحيح' : 'خطأ — سُجّل لمراجعته لاحقاً'}</strong>${BG.esc(q.why)}</div>
       <div class="row"><button class="btn" id="nextBtn" type="button">${run.i + 1 < run.qs.length ? 'التالي' : 'عرض النتيجة'}</button></div>`;
     $('nextBtn').focus();
     $('nextBtn').addEventListener('click', next);
@@ -133,9 +135,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const n = run.qs.length, pct = Math.round(100 * run.score / n);
     $('rScore').textContent = run.score + ' / ' + n;
     $('rMsg').textContent = pct >= 80 ? 'ممتاز! انتقل إلى خلط الأنواع أو إلى المحاكاة.' : pct >= 60 ? 'جيد. راجع الأخطاء المسجلة وأعد الجلسة بعد يوم.' : 'تحتاج مراجعة المنهجية لهذه الأنواع ثم إعادة التدريب.';
-    $('bySkill').innerHTML = Object.entries(run.per).map(([k, v]) =>
-      `<div class="card stat"><div class="n">${v.ok}/${v.n}</div><div class="l">${SKILLS[k]}</div></div>`).join('');
+    $('bySkill').innerHTML = '<p class="summary-line">' + Object.entries(run.per).map(([k, v]) =>
+      `<span>${SKILLS[k]}: <strong>${v.ok}/${v.n}</strong></span>`).join('') + '</p>';
+    const task = BG.param('task');
+    const acts = $('rActions');
+    acts.querySelectorAll('a').forEach(a => a.remove());
+    if (task === 'main') {
+      BG.markDone('main', 'أسئلة سريعة');
+      const b = BG.backToToday(acts); acts.prepend(b);
+      $('againBtn').className = 'btn ghost';
+    }
   }
 
+  // launched from "Today": ?skill=ref&count=10&auto=1&task=main
+  const sk = BG.param('skill'), cnt = BG.param('count');
+  if (sk) { const want = new Set(sk.split(',').filter(k => SKILLS[k])); if (want.size) picked = want; }
+  if (cnt && [...$('countSel').options].some(o => o.value === cnt)) $('countSel').value = cnt;
   drawChips();
+  if (BG.param('auto') === '1' && filtered().length) start();
 });

@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
     drawPhases(elapsed);
     let acc = 0, idx = plan.length - 1;
     for (let i = 0; i < plan.length; i++) { acc += plan[i][1]; if (elapsed < acc) { idx = i; break; } }
+    $('nowPhase').textContent = 'الآن: ' + plan[idx][0];
     if (idx !== lastPhaseIdx && lastPhaseIdx !== -1 && remaining > 0) BG.toast('المرحلة التالية: ' + plan[idx][0]);
     lastPhaseIdx = idx;
     if (remaining <= 0) { stop(true); }
@@ -58,7 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
   function stop(auto) {
     clearInterval(timer); running = false; startedAt = 0;
     $('go').disabled = false; $('pause').disabled = true; $('stop').disabled = true; $('dur').disabled = false;
-    if (auto) { BG.toast('انتهى الوقت! ضع القلم وصحّح بالحل النموذجي.'); $('selfEval').scrollIntoView({ behavior: 'smooth' }); }
+    $('nowPhase').textContent = '';
+    if (auto) { BG.toast('انتهى الوقت. ضع القلم وصحّح بالحل النموذجي.'); }
+    $('selfEval').open = true; $('selfEval').scrollIntoView({ behavior: 'smooth' });
     setDuration();
   }
   $('stop').addEventListener('click', () => stop(false));
@@ -77,8 +80,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const hist = BG.load('sim.history', []);
     hist.push({ id: BG.uid(), date: BG.todayStr(), year: $('yr').value, sujet: $('sSujet').value, type: $('sType').value, comp: a, prod: b, total: a + b, dur: +$('dur').value, note: $('sNote').value });
     BG.save('sim.history', hist);
-    BG.toast('تم الحفظ ✓');
-    setTimeout(() => location.href = 'suivi.html#history', 700);
+    BG.toast('تم الحفظ');
+    const fromToday = BG.param('task') === 'main';
+    if (fromToday) BG.markDone('main', 'امتحان تجريبي');
+    setTimeout(() => { location.href = fromToday ? 'index.html' : 'suivi.html#history'; }, 700);
   });
   setDuration();
 });

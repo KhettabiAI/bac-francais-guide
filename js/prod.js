@@ -70,10 +70,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // open tab from hash (#cr, #appel, #grille)
   const h = location.hash.slice(1);
-  const map = { cr: 'tab-cr', appel: 'tab-appel', grille: 'tab-grille', tool: 'tab-tool' };
-  if (map[h]) {
-    document.getElementById(map[h]).click();
-    const target = document.getElementById(h);
-    if (target) target.scrollIntoView();
+  const map = { cr: 'tab-cr', appel: 'tab-appel', tool: 'tab-tool' };
+  if (map[h]) document.getElementById(map[h]).click();
+
+  // launched from "Today": finishing the writing exercise completes the day's main task
+  if (BG.param('task') === 'main') {
+    const row = document.getElementById('toolDone');
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'btn'; b.textContent = 'أنهيت الكتابة، عُد إلى اليوم';
+    b.addEventListener('click', function () { BG.markDone('main', 'كتابة نص قصير'); location.href = 'index.html'; });
+    row.appendChild(b);
   }
 });

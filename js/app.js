@@ -61,8 +61,43 @@
     autre: 'أخرى',
   };
 
+  // ---- "Today" state: which of today's two tasks (review, main) are done
+  BG.param = name => new URLSearchParams(location.search).get(name);
+  BG.today = function () {
+    const t = BG.load('today', null);
+    return t && t.date === BG.todayStr() ? t : { date: BG.todayStr(), done: {} };
+  };
+  BG.markDone = function (task, label) {
+    if (task !== 'review' && task !== 'main') return;
+    const t = BG.today();
+    if (t.done[task]) return;
+    t.done[task] = true;
+    if (task === 'main' && !t.mainTask) t.mainTask = { t: label || 'خطوة اليوم', d: '' };
+    BG.save('today', t);
+    if (task === 'main') {
+      const days = BG.load('days', []);
+      if (days.indexOf(t.date) < 0) { days.push(t.date); BG.save('days', days); }
+    }
+    if (!BG.load('plan.start', '')) BG.save('plan.start', BG.todayStr());
+  };
+  BG.backToToday = function (container, label) {
+    const a = document.createElement('a');
+    a.className = 'btn'; a.href = (location.pathname.indexOf('/annales/') >= 0 ? '../' : '') + 'index.html';
+    a.textContent = label || 'عُد إلى اليوم';
+    container.appendChild(a); return a;
+  };
+
   // Theme
   document.addEventListener('DOMContentLoaded', function () {
+    // open a <details> targeted by the URL hash (e.g. methode.html#ref)
+    function openHash() {
+      const el = location.hash && document.getElementById(location.hash.slice(1));
+      if (!el) return;
+      for (let p = el; p; p = p.parentElement) if (p.tagName === 'DETAILS') p.open = true;
+      el.scrollIntoView();
+    }
+    openHash(); window.addEventListener('hashchange', openHash);
+
     const btn = document.getElementById('themeBtn');
     if (btn) btn.addEventListener('click', function () {
       const cur = document.documentElement.getAttribute('data-theme');

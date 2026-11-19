@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const d = due(e);
     return `<article class="card mt1" data-id="${e.id}">
       <div class="row"><span class="tag">${BG.esc(BG.ERR_TYPES[e.type] || e.type)}</span>${e.src ? `<span class="tag accent" dir="ltr">${BG.esc(e.src)}</span>` : ''}
-        ${e.resolved ? '<span class="tag">✓ مُتقن</span>' : (d ? `<span class="tag warn">المراجعة: ${d}</span>` : '')}
+        ${e.resolved ? '<span class="tag">مُتقن</span>' : (d ? `<span class="tag warn">المراجعة: ${d}</span>` : '')}
         <span class="spacer"></span><span class="muted" style="font-size:.85rem">${e.date}</span></div>
       <p class="q-text" lang="fr" dir="auto">${BG.esc(e.note)}</p>
       ${withReview ? `<details><summary>عرض التصحيح (بعد المحاولة)</summary><p>${BG.esc(e.fix || e.why || 'لم تُسجَّل ملاحظة — راجع الحل النموذجي.')}</p></details>
-      <div class="row"><button class="btn sm" data-act="ok">✓ أتقنته (مراجعة ${(e.reviews || []).length + 1}/3)</button><button class="btn sm ghost" data-act="ko">✗ ما زلت أخطئ</button></div>`
+      <div class="row"><button class="btn sm" data-act="ok">أتقنته (مراجعة ${(e.reviews || []).length + 1}/3)</button><button class="btn sm ghost" data-act="ko">ما زلت أخطئ</button></div>`
         : `<details><summary>التصحيح</summary><p>${BG.esc(e.fix || e.why || '—')}</p></details>
       <div class="row"><button class="btn sm ghost" data-act="toggle">${e.resolved ? 'إعادة فتح' : 'وسم كمُتقن'}</button><button class="btn sm ghost" data-act="del">حذف</button></div>`}
     </article>`;
@@ -35,7 +35,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function render() {
     const dueList = errors.filter(e => { const d = due(e); return d && d <= today; });
-    $('dueList').innerHTML = dueList.length ? dueList.map(e => card(e, true)).join('') : '<p class="muted">لا توجد مراجعات مستحقة اليوم 🎉 — أضف أخطاء جديدة بعد كل تدريب.</p>';
+    $('dueList').innerHTML = dueList.length ? dueList.map(e => card(e, true)).join('') : '<p class="muted">لا توجد مراجعات اليوم.</p>';
+    if (!dueList.length && BG.param('task') === 'review') {
+      BG.markDone('review');
+      const box = $('reviewDone'); box.innerHTML = '<div class="callout"><strong class="t">أنهيت المراجعة</strong>ارجع إلى «اليوم» لخطوتك التالية.</div><p class="row" id="rdBtn"></p>';
+      BG.backToToday($('rdBtn'));
+    }
     const ft = $('fType').value, fs = $('fState').value;
     const all = errors.filter(e => (ft === 'all' || e.type === ft) && (fs === 'all' || (fs === 'open' ? !e.resolved : e.resolved)));
     $('allList').innerHTML = all.length ? all.map(e => card(e, false)).join('') : '<p class="muted">لا شيء لعرضه.</p>';
@@ -51,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const a = b.dataset.act;
     if (a === 'ok') {
       e.reviews = (e.reviews || []).concat(today);
-      if (e.reviews.length >= GAPS.length) { e.resolved = true; BG.toast('أُتقن الخطأ بعد 3 مراجعات ✓'); }
+      if (e.reviews.length >= GAPS.length) { e.resolved = true; BG.toast('أُتقن الخطأ بعد 3 مراجعات'); }
     } else if (a === 'ko') { e.reviews = []; e.date = today; BG.toast('ستعود إليه غداً'); }
     else if (a === 'toggle') e.resolved = !e.resolved;
     else if (a === 'del') { if (!confirm('حذف هذا الخطأ؟')) return; errors = errors.filter(x => x !== e); }
@@ -63,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ev.preventDefault();
     BG.addError({ type: $('eType').value, src: $('eSrc').value.trim(), note: $('eNote').value.trim(), fix: $('eFix').value.trim() });
     errors = BG.load('errors', []);
-    this.reset(); BG.toast('تمت إضافة الخطأ ✓'); render();
+    this.reset(); BG.toast('تمت إضافة الخطأ'); render();
     $('t-due').click();
   });
 
@@ -120,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // ---- data
-  const KEYS = ['errors', 'sim.history', 'plan.weeks', 'plan.tasks', 'plan.start', 'quiz.stats', 'flash.state', 'flash.newPerDay', 'prod.draft'];
+  const KEYS = ['errors', 'sim.history', 'plan.weeks', 'plan.tasks', 'plan.start', 'quiz.stats', 'flash.state', 'flash.newPerDay', 'prod.draft', 'today', 'days', 'texts'];
   $('exportBtn').addEventListener('click', function () {
     const o = {}; KEYS.forEach(k => { o[k] = BG.load(k, null); });
     const blob = new Blob([JSON.stringify(o, null, 2)], { type: 'application/json' });
@@ -129,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
   $('importFile').addEventListener('change', function () {
     const f = this.files[0]; if (!f) return;
     f.text().then(function (t) {
-      try { const o = JSON.parse(t); KEYS.forEach(k => { if (o[k] !== null && o[k] !== undefined) BG.save(k, o[k]); }); BG.toast('تم الاستيراد ✓'); setTimeout(() => location.reload(), 600); }
+      try { const o = JSON.parse(t); KEYS.forEach(k => { if (o[k] !== null && o[k] !== undefined) BG.save(k, o[k]); }); BG.toast('تم الاستيراد'); setTimeout(() => location.reload(), 600); }
       catch (e) { BG.toast('ملف غير صالح'); }
     });
   });
@@ -140,6 +145,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   render();
   const h = location.hash.slice(1);
-  const map = { add: 't-add', history: 't-history' };
-  if (map[h]) $(map[h]).click();
+  if (h === 'history') $('t-history').click();
+  if (BG.param('add') === '1' || h === 'add') { $('add').open = true; $('add').scrollIntoView(); }
 });
